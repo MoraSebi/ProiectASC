@@ -1,7 +1,3 @@
-Iată codul tău cu comentarii detaliate adăugate pentru fiecare secțiune logică, explicând instrucțiunile specifice de asamblare x86 și fluxul algoritmilor:
-
-Code snippet
-
 .DATA
     ; Mesaje pentru interfața cu utilizatorul
     MSG_SORTED      DB 0Dh, 0Ah, '2. Sirul sortat descrescator: $'
