@@ -34,8 +34,8 @@ NEXT_BYTE:
 
 SAVE_SINGLE:            ; Cazul în care avem un nibble "rătăcit" la final
     SHL DH, 4
-    MOV [DI], DH
-    INC BX
+    MOV [DI], DH        ; Îl salvăm așa cum e.
+    INC BX              ; Incrementăm contorul.
 FIN_C:
     MOV NR_OCTETI, BX   ; Salvăm numărul total de octeți procesați
     RET
@@ -44,24 +44,24 @@ CONVERT_INPUT ENDP
 ; Caută un caracter Hex valid (0-9, A-F) și îl convertește în valoare binară
 FIND_NEXT_HEX PROC
     LOD_LOOP:
-        MOV AL, [SI]
+        MOV AL, [SI]    ; Încărcăm în AL caracterul curent indicat de SI.
         CMP AL, 0Dh     ; Verificăm terminatorul de șir (Enter)
         JE END_STR
         CMP AL, ' '     ; Ignorăm spațiile
-        JE NEXT_CHAR
+        JE NEXT_CHAR    ; Dacă e spațiu, îl ignorăm și trecem la următorul.
         
         ; Verificăm dacă caracterul este între '0' și '9'
         CMP AL, '0'
         JB NEXT_CHAR
         CMP AL, '9'
-        JBE IS_NUM
+        JBE IS_NUM    ; Mergem la conversia numerica
         
         ; Tratăm literele (A-F), forțând majuscula
         AND AL, 0DFh    ; Mică -> Mare (bitul 5 resetat)
         CMP AL, 'A'
-        JB NEXT_CHAR
+        JB NEXT_CHAR    ; Sub A nu e valid
         CMP AL, 'F'
-        JA NEXT_CHAR
+        JA NEXT_CHAR    ; Peste F nu e valid
         SUB AL, 7       ; Ajustăm distanța între codul ASCII al '9' și 'A'
     IS_NUM:
         SUB AL, '0'     ; Obținem valoarea numerică (0-15)
